@@ -21,7 +21,7 @@ There are also some drawbacks which come with this solution (mentioned later)
 ## NFS server
 ### Desinfect System
 - Export a share read only (e.g. `/pxeboot`)
-- Create a folder for the OS (e.g. `/pxeboot/desifect2024`)
+- Create a folder for the OS (e.g. `/pxeboot/desinfect2024`)
 - Copy the **content** of the Desinfec't ISO into this folder
 
 ### Desinfect Signatures
@@ -62,3 +62,18 @@ imgargs vmlinuz initrd=initrd.lz nfssigs=10.0.0.1:/srv/shares/sigdesinfect/2024 
 boot || goto failed
 goto start
 ```
+
+## First Boot
+Get the signatures with the call of: `sudo bash /opt/desinfect/update_all_signatures.sh`.
+- The signatures of all scanners are fetched and saved to the NFS share
+- Additionally all scan engines get installed.
+- This also updates the Desinfec"t system incuding the Firefox browser. The packages are saved to the signature share and get reinstalled when the system is booted again.
+
+## Scanning
+Please be aware, that the signature update of the scan process does not work. To have working scanners you have to:
+- Update the signature of the used scan engine after each boot. Can be done either with `sudo bash /opt/desinfect/update_all_signatures.sh` (for all engines) or woth `sudo bash /opt/desinfect/update_%scanner%.sh` (for specified scanner).
+  - this installes the engine (engine is not installed after boot)
+  - this gets a delta update uf the signatures
+- Run the scan with signature update disabled in the `Expert` tab.
+
+The above points are nessesary especially for WithSecure. I never got a working scan without this. Other scanners might work.
