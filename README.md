@@ -64,16 +64,18 @@ goto start
 ```
 
 ## First Boot
-Get the signatures with the call of: `sudo bash /opt/desinfect/update_all_signatures.sh`.
+Get the signatures with the call of: `sudo /opt/desinfect/update_all_signatures.sh`.
 - The signatures of all scanners are fetched and saved to the NFS share
 - Additionally all scan engines get installed.
 - This also updates the Desinfec"t system incuding the Firefox browser. The packages are saved to the signature share and get reinstalled when the system is booted again.
 
-## Scanning
-Please be aware, that the signature update of the scan process does not work. To have working scanners you have to:
-- Update the signature of the used scan engine after each boot. Can be done either with `sudo bash /opt/desinfect/update_all_signatures.sh` (for all engines) or woth `sudo bash /opt/desinfect/update_%scanner%.sh` (for specified scanner).
+## Scanning - WithSecure
+Please be aware, that the signature update of the Scan-Assistent does not work. To have working scanner you have to:
+- Update the signature of WithSecure after each boot. Can be done either with `sudo /opt/desinfect/update_all_signatures.sh` (for all engines) or with `sudo /opt/desinfect/update_withsecure.sh`.
   - this installes the engine (engine is not installed after boot)
-  - this gets a delta update uf the signatures
+  - this gets a delta update of the signatures
 - Run the scan with signature update disabled in the `Expert` tab.
 
-The above points are nessesary especially for WithSecure. I never got a working scan without this. Other scanners might work.
+## Not working
+- AV signature update with `Desinfec't Scan-Assistent` - especially affected is WithSecure
+- Scan-Assistent does not recognize a working network connection. Just ignore this.
