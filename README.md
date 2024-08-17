@@ -79,3 +79,6 @@ Please be aware, that the signature update of the Scan-Assistent does not work. 
 ## Not working
 - AV signature update with `Desinfec't Scan-Assistent` - especially affected is WithSecure
 - Scan-Assistent does not recognize a working network connection. Just ignore this.
+
+## Screenshots
+![Desinfec"t after all signatures update](/doc/Desinfect-after-upgrade.jpg)
