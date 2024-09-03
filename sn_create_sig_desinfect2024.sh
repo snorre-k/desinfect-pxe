@@ -9,9 +9,9 @@ INFO=/home/desinfect/Desktop/PXE_INFO.txt
 desinfect_password=a
 MSG="The scan buildin update does (most of the time) not work with PXE!
 
-After each boot before staring a scan do an update:
- - either all with: sudo bash /opt/desinfect/update_all_signatures.sh
- - or defined with: sudo bash /opt/desinfect/update_%scanner%.sh
+After each boot before starting a scan do an update:
+ - either all with: sudo /opt/desinfect/update_all_signatures.sh
+ - or defined with: sudo /opt/desinfect/update_%scanner%.sh
 
 Then start the scan(s) without signature update (Expert tab)"
 
@@ -62,10 +62,12 @@ echo
 echo "Creating DEB directory - copy saved *.deb files:"
 echo "$SIG/deb"
 mkdir $SIG/deb
-for i in $(ls "$(dirname "$0")/${YEAR}_deb"); do
-  echo "$SIG/deb/$i"
-  cp "$(dirname "$0")/${YEAR}_deb/$i" $SIG/deb
-done
+if [ -d "$(dirname "$0")/${YEAR}_deb" ]; then
+  for i in $(ls "$(dirname "$0")/${YEAR}_deb"); do
+    echo "$SIG/deb/$i"
+    cp "$(dirname "$0")/${YEAR}_deb/$i" $SIG/deb
+  done
+fi
 echo
 
 ## Userinit Scripts

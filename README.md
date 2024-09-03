@@ -34,7 +34,7 @@ There are also some drawbacks which come with this solution (mentioned later)
   - copy the content of `%year%_deb` to above folder - this can be used to install own packages e.g. `openssh-server`
   - create a `userinit.sh` script which will be executed at boot by Desinfec't
 
-The `userinit.sh` script is nessesary to workaround the mount of the signatures share with NFSv3 and `local_locks` enabled. This is nessesary for WithSecure to work. Additionally it sets a password for the User `desinfect` (default `a` - can be changed).
+The `userinit.sh` script is nessesary to workaround the mount of the signatures share with NFSv3 and `local_locks` enabled. This is essential for WithSecure to work. Additionally it sets a password for the User `desinfect` (default `a` - can be changed).
 
 ## TFTP Boot Config
 This is only an example. Please adapt to your needs. The example uses:
@@ -78,7 +78,8 @@ Please be aware, that the signature update of the Scan-Assistent does not work. 
 
 ## Not working
 - AV signature update with `Desinfec't Scan-Assistent` - especially affected is WithSecure
-- Scan-Assistent does not recognize a working network connection. Just ignore this.
+- Scan-Assistent does not recognize a working network connection - ignore this
+- Clean shutdown after scanning or signature update - just reset your PC
 
 ## Screenshots
 ![Desinfec"t after all signatures update](/doc/Desinfect-after-upgrade.jpg)
