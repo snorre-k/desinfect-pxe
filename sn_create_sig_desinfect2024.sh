@@ -3,6 +3,7 @@
 ## Definitions ##
 YEAR=2024
 P=00
+SIGS_FOR="clamav eset f-secure thorlite yara"
 SIG="/srv/shares/sigdesinfect/$YEAR"
 SUB="desinfect-signatures"
 INFO=/home/desinfect/Desktop/PXE_INFO.txt
@@ -42,19 +43,23 @@ fi
 if ! [ -d $SIG/$SUB ]; then
   echo "$SIG/$SUB"
   mkdir $SIG/$SUB
+  chmod 755 $SIG/$SUB
 fi
 
-for i in clamav eset f-secure msdefender thorlite yara; do
+for i in $SIGS_FOR; do
   if ! [ -d $SIG/$SUB/$i ]; then
     echo "$SIG/$SUB/$i (incl. .syncme)"
     mkdir $SIG/$SUB/$i
+    chmod 755 $SIG/$SUB/$i
     touch $SIG/$SUB/$i/.syncme
+    chmod 644 $SIG/$SUB/$i/.syncme
   fi
 done
 
 if ! [ -f $SIG/.desinfect$YEAR ]; then
   echo "$SIG/.desinfect${YEAR}$P"
   touch $SIG/.desinfect${YEAR}$P
+  chmod 644 $SIG/.desinfect${YEAR}$P
 fi
 echo
 
@@ -62,11 +67,13 @@ echo
 echo "Creating DEB directory - copy saved *.deb files:"
 echo "$SIG/deb"
 mkdir $SIG/deb
+chmod 755 $SIG/deb
 if [ -d "$(dirname "$0")/${YEAR}_deb" ]; then
   for i in $(ls "$(dirname "$0")/${YEAR}_deb"); do
     echo "$SIG/deb/$i"
     cp "$(dirname "$0")/${YEAR}_deb/$i" $SIG/deb
   done
+  chmod 644 $SIG/deb/*
 fi
 echo
 
@@ -107,7 +114,7 @@ echo desinfect:$desinfect_password | sudo chpasswd
 echo "$MSG" > "$INFO"
 EOF
 
-chmod +x $SIG/userinit.sh
+chmod 755 $SIG/userinit.sh
 echo
 
 ## WARNING
