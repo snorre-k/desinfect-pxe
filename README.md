@@ -34,7 +34,7 @@ There are also some drawbacks which come with this solution (mentioned later)
   - copy the content of `%year%_deb` to above folder - this can be used to install own packages e.g. `openssh-server`
   - create a `userinit.sh` script which will be executed at boot by Desinfec't
 
-The `userinit.sh` script is nessesary to workaround the mount of the signatures share with NFSv3 and `local_locks` enabled. This is essential for WithSecure to work. Additionally it sets a password for the User `desinfect` (default `a` - can be changed).
+The `userinit.sh` script sets the correct time and a password for the User `desinfect` (default `a` - can be changed).
 
 ## TFTP Boot Config
 This is only an example. Please adapt to your needs. The example uses:
@@ -69,17 +69,10 @@ Get the signatures with the call of: `sudo /opt/desinfect/update_all_signatures.
 - Additionally all scan engines get installed.
 - This also updates the Desinfec"t system incuding the Firefox browser. The packages are saved to the signature share and get reinstalled when the system is booted again.
 
-## Scanning - WithSecure
-Please be aware, that the signature update of the Scan-Assistent does not work. To have working scanner you have to:
-- Update the signature of WithSecure after each boot. Can be done either with `sudo /opt/desinfect/update_all_signatures.sh` (for all engines) or with `sudo /opt/desinfect/update_withsecure.sh`.
-  - this installes the engine (engine is not installed after boot)
-  - this gets a delta update of the signatures
-- Run the scan with signature update disabled in the `Expert` tab.
 
 ## Not working
-- AV signature update with `Desinfec't Scan-Assistent` - especially affected is WithSecure
 - Scan-Assistent does not recognize a working network connection - ignore this
 - Clean shutdown after scanning or signature update - just reset your PC
 
 ## Screenshots
-![Desinfec"t after all signatures update](/doc/Desinfect-after-upgrade.jpg)
+![Desinfec"t after all signatures update](/doc/Desinfect-2025-after-upgrade.jpg)
