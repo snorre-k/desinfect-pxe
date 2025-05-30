@@ -21,16 +21,16 @@ There are also some drawbacks which come with this solution (mentioned later)
 ## NFS server
 ### Desinfect System
 - Export a share read only (e.g. `/pxeboot`)
-- Create a folder for the OS (e.g. `/pxeboot/desinfect2024`)
+- Create a folder for the OS (e.g. `/pxeboot/desinfect2025`)
 - Copy the **content** of the Desinfec't ISO into this folder
 
 ### Desinfect Signatures
 - Export a share read write (e.g. `/srv/shares/sigdesinfect`).
 - Run the script `./sn_create_sig_desinfect%year%.sh -i` on the NFS server. The script will ask for the signature share, the year and some other stuff. It will:
-  - create the year folder, e.g.: `/srv/shares/sigdesinfect/2024`
+  - create the year folder, e.g.: `/srv/shares/sigdesinfect/2025`
   - create the signature folders for the scanners including the `.syncme` file
-  - create the hidden .desinfect%year%00 file e.g.: `/srv/shares/sigdesinfect/2024/.desifect202400`
-  - create the folder /deb e.g.: `/srv/shares/sigdesinfect/2024/deb`
+  - create the hidden .desinfect%year%00 file e.g.: `/srv/shares/sigdesinfect/2025/.desifect202500`
+  - create the folder /deb e.g.: `/srv/shares/sigdesinfect/2025/deb`
   - copy the content of `%year%_deb` to above folder - this can be used to install own packages e.g. `openssh-server`
   - create a `userinit.sh` script which will be executed at boot by Desinfec't
 
@@ -39,26 +39,26 @@ The `userinit.sh` script sets the correct time and a password for the User `desi
 ## TFTP Boot Config
 This is only an example. Please adapt to your needs. The example uses:
 - IP of NFS server: `10.0.0.1`
-- NFS OS share: `/pxeboot/desinfect2024`
-- NFS SIG share: `/srv/shares/sigdesinfect/2024`
-- TFTP: `tftproot/desinfect2024` containing kernel `vmliniz` and initrd `initrd.lz` copied from ISO directory `/casper`
+- NFS OS share: `/pxeboot/desinfect2025`
+- NFS SIG share: `/srv/shares/sigdesinfect/2025`
+- TFTP: `tftproot/desinfect2025` containing kernel `vmliniz` and initrd `initrd.lz` copied from ISO directory `/casper`
 
 ### PXELINUX
 ```
-LABEL desinfect2024
-MENU LABEL Desinfec't 2024
-LINUX desinfect2024/vmlinuz
-APPEND initrd=desinfect2024/initrd.lz nfssigs=10.0.0.1:/srv/shares/sigdesinfect/2024 ip=dhcp root=/dev/nfs boot=casper xfce file=/desinfect/preseed/ubuntu.seed netboot=nfs nfsroot=10.0.0.1:/pxeboot/desinfect2024 rmdns systemd.mask=tmp.mount memtest=4 debian-installer/language=de console-setup/layoutcode?=de locale=en_US.UTF-8 noprompt noeject 
+LABEL desinfect2025
+MENU LABEL Desinfec't 2025
+LINUX desinfect2025/vmlinuz
+APPEND initrd=desinfect2025/initrd.lz nfssigs=10.0.0.1:/srv/shares/sigdesinfect/2025 ip=dhcp root=/dev/nfs boot=casper xfce file=/desinfect/preseed/ubuntu.seed netboot=nfs nfsroot=10.0.0.1:/pxeboot/desinfect2025 rmdns systemd.mask=tmp.mount memtest=4 debian-installer/language=de console-setup/layoutcode?=de locale=en_US.UTF-8 noprompt noeject 
 ```
 
 ### iPXE with HTTP load
 ```
-echo Booting Desinfec't 2024
+echo Booting Desinfec't 2025
 set base-ip 10.0.0.1
-set base-url http://${base-ip}/pxeboot/desinfect2024
+set base-url http://${base-ip}/pxeboot/desinfect2025
 kernel ${base-url}/casper/vmlinuz
 initrd ${base-url}/casper/initrd.lz
-imgargs vmlinuz initrd=initrd.lz nfssigs=10.0.0.1:/srv/shares/sigdesinfect/2024 ip=dhcp root=/dev/nfs boot=casper xfce file=/desinfect/preseed/ubuntu.seed netboot=nfs nfsroot=${base-ip}:/pxeboot/desinfect2024 rmdns systemd.mask=tmp.mount memtest=4 debian-installer/language=de console-setup/layoutcode?=de locale=en_US.UTF-8 noprompt noeject
+imgargs vmlinuz initrd=initrd.lz nfssigs=10.0.0.1:/srv/shares/sigdesinfect/2025 ip=dhcp root=/dev/nfs boot=casper xfce file=/desinfect/preseed/ubuntu.seed netboot=nfs nfsroot=${base-ip}:/pxeboot/desinfect2025 rmdns systemd.mask=tmp.mount memtest=4 debian-installer/language=de console-setup/layoutcode?=de locale=en_US.UTF-8 noprompt noeject
 boot || goto failed
 goto start
 ```
